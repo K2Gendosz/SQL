@@ -1,0 +1,260 @@
+zad 1.
+Select tytul
+from filmy
+where rok_produkcji = 1998 or rok_produkcji = 1999;
+
+zad 2.
+select tytul,cena from filmy
+where cena > 9
+order by cena;
+
+zad 3.
+select nazwisko from klienci 
+where imie = 'Jan';
+
+zad 4.
+select imie,nazwisko from klienci 
+where length(imie)>length(nazwisko);   // funkcja length zwraca d³ugoœæ ³añcucha varchar
+
+zad 5.
+select nazwisko from aktorzy 
+where imie = 'Arnold' or imie = 'Tom' or imie = 'Jodie'     //order by == rosn¹co (od najmniejszego)  
+order by nazwisko;					    //## ¿eby odwróciæ po 'order by nazwisko ' dopisz desc
+
+zad 6.
+select distinct id_filmu from kopie    // distinct po select usuwa powtórzenia
+where czy_dostepna = 'T';
+
+zad 7.
+select distinct id_kopii from wypozyczenia 
+where data_wypozyczenia >= '2005-07-15'         //format daty 'rrrr_mm_dd' zera uwzglêdniane
+and data_wypozyczenia <= '2005-07-22'
+order by id_kopii ;
+
+zad 8.
+select id_kopii,data_zwrotu - data_wypozyczenia as czas   //   wyswietlanie okreœlonego warunku w zdefiniowanej kolumnie przy u¿yciu as 
+from wypozyczenia					  //   w relacjach do projekcji 
+where data_zwrotu - data_wypozyczenia > 1;
+
+zad 9.
+select substring(imie from 1 for 1 )||'. '|| nazwisko as aktor  //'|| ³¹czy kolumny do poprzedniej '
+from aktorzy;
+
+zad 10.
+select tytul 
+from filmy 
+order by length(tytul) // funkcja length() zwraca dlugoœæ ³añcucha varchar 
+
+zad 11.
+select tytul,cena
+from filmy 
+order by rok_produkcji desc
+limit 3;  			 // limit 3 -> 3 pierwsze wyniki 
+
+zad 12.
+select imie ,
+substring(imie from 1 for 1) as pierwsza,
+substring(imie from length(imie) for 1) as ostatnia  //substring zaczyna numeracjê od 1 nie od zera jak w tablicy/stringu c#
+from klienci ;
+
+zad 13.
+select distinct imie from klienci
+where substring(lower(imie) from 1 for 1) =
+substring(lower(imie) from length(imie) for 1);
+
+zad 14.
+select tytul from filmy
+where substring(tytul from length(tytul)-1 for 1) = 'o';
+
+zad 15.
+select lower(imie)||'.'||lower(nazwisko)||'@'||'wsb.pl' as email
+from klienci;
+
+=========================================================================================================================================
+
+zad 16.
+select id_kopii,tytul from kopie 
+join filmy on filmy.id_filmu=kopie.id_filmu;  // join on => do³¹cza tabele do wybrania z niej ON => opisuje warunek wg czego maj¹ siê ³¹czyæ projekcje
+
+zad 17.
+select distinct tytul from filmy
+join kopie on filmy.id_filmu=kopie.id_filmu // przy wyborze z innej relacji musimy dodaæ join i powi¹zaæ warunkiem on
+where kopie.czy_dostepna = 'T'
+order by tytul;
+
+zad 18.
+select id_kopii from kopie 
+join filmy on kopie.id_filmu=filmy.id_filmu
+where rok_produkcji = 1984;
+
+zad 19.
+select data_wypozyczenia,data_zwrotu,nazwisko
+from wypozyczenia 
+join klienci on wypozyczenia.id_klienta=klienci.id_klienta;
+
+zad 20.
+select distinct nazwisko,tytul
+from kopie 
+join wypozyczenia on wypozyczenia.id_kopii=kopie.id_kopii
+join filmy on kopie.id_filmu=filmy.id_filmu			//powi¹zywanie ze sob¹ nie zwi¹zanych t¹ sam¹ kolumn¹ tabel ³añcuchem
+join klienci on klienci.id_klienta=wypozyczenia.id_klienta;
+
+zad 21.
+select tytul,rok_produkcji from filmy
+join kopie on filmy.id_filmu = kopie.id_filmu
+join wypozyczenia on wypozyczenia.id_kopii=kopie.id_kopii
+join klienci on klienci.id_klienta=wypozyczenia.id_klienta
+where nazwisko = 'Kowalski';
+
+zad 22.
+select nazwisko from klienci 
+join wypozyczenia on wypozyczenia.id_klienta=klienci.id_klienta
+where data_wypozyczenia=(select min(data_wypozyczenia)from wypozyczenia);    // podzapytanie pozwala u¿yc funkcji agreguj¹cych 
+
+zad 23.
+select nazwisko from aktorzy 
+join obsada on obsada.id_aktora=aktorzy.id_aktora
+join filmy on filmy.id_filmu=obsada.id_filmu
+where tytul = 'Terminator';
+
+zad 24.
+select tytul from filmy 
+join obsada on obsada.id_filmu= filmy.id_filmu
+join aktorzy on aktorzy.id_aktora=obsada.id_aktora
+where nazwisko = 'De Niro';
+
+zad 25.
+select tytul from filmy 
+join kopie on filmy.id_filmu=kopie.id_filmu
+join wypozyczenia on kopie.id_kopii=wypozyczenia.id_kopii
+where data_zwrotu - data_wypozyczenia = (select max(data_zwrotu - data_wypozyczenia) from wypozyczenia); //pod zapytanie zwraca wartoœæ któr¹ trzeba porównaæ 
+
+zad 26.
+select distinct nazwisko 
+from klienci
+join wypozyczenia on klienci.id_klienta = wypozyczenia.id_klienta
+where data_wypozyczenia > '2005-07-15' and data_wypozyczenia < '2005-07-20'
+
+zad 27.
+select distinct tytul 
+from filmy
+join kopie on filmy.id_filmu = kopie.id_filmu
+join wypozyczenia on kopie.id_kopii = wypozyczenia.id_kopii
+where data_wypozyczenia > '2005-07-15' and data_wypozyczenia < '2005-07-25'
+order by tytul ;
+
+zad 28.
+select distinct
+klienci.imie as imie,
+klienci.nazwisko as nazwisko,
+aktorzy.nazwisko as nazwisko
+from klienci
+cross join wypozyczenia 
+cross join kopie 
+cross join obsada 
+cross join aktorzy 
+where klienci.imie=aktorzy.imie 
+
+===============================================================================================================
+
+zad 29.
+select nazwisko from klienci
+union				  // union => ³¹czenie do jednej kolumny do osobnych wierszy
+select nazwisko from aktorzy
+order by nazwisko;
+
+zad 30.
+select tytul from filmy
+join obsada on filmy.id_filmu = obsada.id_filmu
+join aktorzy on obsada.id_aktora = aktorzy.id_aktora
+where aktorzy.nazwisko = 'De Niro'
+intersect						// czêœæ wspólna z po³¹czeñ
+select tytul from filmy
+join obsada on filmy.id_filmu = obsada.id_filmu
+join aktorzy on obsada.id_aktora = aktorzy.id_aktora
+where aktorzy.nazwisko = 'Reno'
+
+zad 31.
+select tytul from filmy
+join kopie on filmy.id_filmu = kopie.id_filmu
+join wypozyczenia on kopie.id_kopii = wypozyczenia.id_kopii
+join klienci on wypozyczenia.id_klienta = klienci.id_klienta
+where klienci.nazwisko = 'Kowalski'
+intersect
+select tytul from filmy
+join kopie on filmy.id_filmu = kopie.id_filmu
+join wypozyczenia on kopie.id_kopii = wypozyczenia.id_kopii
+join klienci on wypozyczenia.id_klienta = klienci.id_klienta
+where klienci.nazwisko = 'Nowak';
+
+zad 32.
+select tytul from filmy
+join kopie on filmy.id_filmu = kopie.id_filmu
+join wypozyczenia on kopie.id_kopii = wypozyczenia.id_kopii
+join klienci on wypozyczenia.id_klienta = klienci.id_klienta
+where klienci.nazwisko = 'Kowalski'
+except
+select tytul from filmy
+join kopie on filmy.id_filmu = kopie.id_filmu
+join wypozyczenia on kopie.id_kopii = wypozyczenia.id_kopii
+join klienci on wypozyczenia.id_klienta = klienci.id_klienta
+where klienci.nazwisko = 'Nowak';
+
+zad 33.
+select nazwisko from aktorzy
+join obsada on aktorzy.id_aktora = obsada.id_aktora
+join filmy on obsada.id_filmu = filmy.id_filmu
+where tytul = 'Terminator'
+except
+select nazwisko from aktorzy
+join obsada on aktorzy.id_aktora = obsada.id_aktora
+join filmy on obsada.id_filmu = filmy.id_filmu
+where tytul = 'Ghostbusters';
+
+====================================================================================================================
+
+zad 34.
+select rok_produkcji,avg(cena)
+from filmy
+group by rok_produkcji
+order by rok_produkcji desc;
+
+zad 35.
+select max(cena) from filmy;
+
+zad 36.
+select count(*) from filmy
+where rok_produkcji = 1984;
+
+zad 37.
+select count(*) from wypozyczenia
+join kopie on wypozyczenia.id_kopii = kopie.id_kopii
+join filmy on kopie.id_filmu = filmy.id_filmu
+where tytul = 'Taksowkarz';
+
+38.
+select round(avg(data_zwrotu-data_wypozyczenia),1) 
+from wypozyczenia
+join kopie on wypozyczenia.id_kopii = kopie.id_kopii
+join filmy on kopie.id_filmu = filmy.id_filmu
+where tytul = 'Ronin';
+
+39.
+select 
+tytul as tytul ,
+round(min(data_zwrotu-data_wypozyczenia),1) as "min",
+round(max(data_zwrotu-data_wypozyczenia),1) as "max",
+round(avg(data_zwrotu-data_wypozyczenia),1) as sre,
+count(*) as razy
+from filmy
+join kopie on filmy.id_filmu = kopie.id_filmu
+join wypozyczenia on kopie.id_kopii = wypozyczenia.id_kopii
+
+group by tytul
+order by razy desc;
+
+40.
+select imie,nazwisko,count(*)
+from klienci
+join wypozyczenia on klienci.id_klienta = wypozyczenia.id_klienta
+group by imie,nazwisko;
