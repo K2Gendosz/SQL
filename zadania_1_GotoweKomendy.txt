@@ -14,36 +14,36 @@ where imie = 'Jan';
 
 zad 4.
 select imie,nazwisko from klienci 
-where length(imie)>length(nazwisko);   // funkcja length zwraca d³ugoœæ ³añcucha varchar
+where length(imie)>length(nazwisko);   // funkcja length zwraca dÅ‚ugoÅ›Ä‡ Å‚aÅ„cucha varchar
 
 zad 5.
 select nazwisko from aktorzy 
-where imie = 'Arnold' or imie = 'Tom' or imie = 'Jodie'     //order by == rosn¹co (od najmniejszego)  
-order by nazwisko;					    //## ¿eby odwróciæ po 'order by nazwisko ' dopisz desc
+where imie = 'Arnold' or imie = 'Tom' or imie = 'Jodie'     //order by == rosnÄ…co (od najmniejszego)  
+order by nazwisko;					    //## Å¼eby odwrÃ³ciÄ‡ po 'order by nazwisko ' dopisz desc
 
 zad 6.
-select distinct id_filmu from kopie    // distinct po select usuwa powtórzenia
+select distinct id_filmu from kopie    // distinct po select usuwa powtÃ³rzenia
 where czy_dostepna = 'T';
 
 zad 7.
 select distinct id_kopii from wypozyczenia 
-where data_wypozyczenia >= '2005-07-15'         //format daty 'rrrr_mm_dd' zera uwzglêdniane
+where data_wypozyczenia >= '2005-07-15'         //format daty 'rrrr_mm_dd' zera uwzglÄ™dniane
 and data_wypozyczenia <= '2005-07-22'
 order by id_kopii ;
 
 zad 8.
-select id_kopii,data_zwrotu - data_wypozyczenia as czas   //   wyswietlanie okreœlonego warunku w zdefiniowanej kolumnie przy u¿yciu as 
+select id_kopii,data_zwrotu - data_wypozyczenia as czas   //   wyswietlanie okreÅ›lonego warunku w zdefiniowanej kolumnie przy uÅ¼yciu as 
 from wypozyczenia					  //   w relacjach do projekcji 
 where data_zwrotu - data_wypozyczenia > 1;
 
 zad 9.
-select substring(imie from 1 for 1 )||'. '|| nazwisko as aktor  //'|| ³¹czy kolumny do poprzedniej '
+select substring(imie from 1 for 1 )||'. '|| nazwisko as aktor  //'|| Å‚Ä…czy kolumny do poprzedniej '
 from aktorzy;
 
 zad 10.
 select tytul 
 from filmy 
-order by length(tytul) // funkcja length() zwraca dlugoœæ ³añcucha varchar 
+order by length(tytul) // funkcja length() zwraca dlugoÅ›Ä‡ Å‚aÅ„cucha varchar 
 
 zad 11.
 select tytul,cena
@@ -54,7 +54,7 @@ limit 3;  			 // limit 3 -> 3 pierwsze wyniki
 zad 12.
 select imie ,
 substring(imie from 1 for 1) as pierwsza,
-substring(imie from length(imie) for 1) as ostatnia  //substring zaczyna numeracjê od 1 nie od zera jak w tablicy/stringu c#
+substring(imie from length(imie) for 1) as ostatnia  //substring zaczyna numeracjÄ™ od 1 nie od zera jak w tablicy/stringu c#
 from klienci ;
 
 zad 13.
@@ -74,11 +74,11 @@ from klienci;
 
 zad 16.
 select id_kopii,tytul from kopie 
-join filmy on filmy.id_filmu=kopie.id_filmu;  // join on => do³¹cza tabele do wybrania z niej ON => opisuje warunek wg czego maj¹ siê ³¹czyæ projekcje
+join filmy on filmy.id_filmu=kopie.id_filmu;  // join on => doÅ‚Ä…cza tabele do wybrania z niej ON => opisuje warunek wg czego majÄ… siÄ™ Å‚Ä…czyÄ‡ projekcje
 
 zad 17.
 select distinct tytul from filmy
-join kopie on filmy.id_filmu=kopie.id_filmu // przy wyborze z innej relacji musimy dodaæ join i powi¹zaæ warunkiem on
+join kopie on filmy.id_filmu=kopie.id_filmu // przy wyborze z innej relacji musimy dodaÄ‡ join i powiÄ…zaÄ‡ warunkiem on
 where kopie.czy_dostepna = 'T'
 order by tytul;
 
@@ -96,7 +96,7 @@ zad 20.
 select distinct nazwisko,tytul
 from kopie 
 join wypozyczenia on wypozyczenia.id_kopii=kopie.id_kopii
-join filmy on kopie.id_filmu=filmy.id_filmu			//powi¹zywanie ze sob¹ nie zwi¹zanych t¹ sam¹ kolumn¹ tabel ³añcuchem
+join filmy on kopie.id_filmu=filmy.id_filmu			//powiÄ…zywanie ze sobÄ… nie zwiÄ…zanych tÄ… samÄ… kolumnÄ… tabel Å‚aÅ„cuchem
 join klienci on klienci.id_klienta=wypozyczenia.id_klienta;
 
 zad 21.
@@ -109,7 +109,7 @@ where nazwisko = 'Kowalski';
 zad 22.
 select nazwisko from klienci 
 join wypozyczenia on wypozyczenia.id_klienta=klienci.id_klienta
-where data_wypozyczenia=(select min(data_wypozyczenia)from wypozyczenia);    // podzapytanie pozwala u¿yc funkcji agreguj¹cych 
+where data_wypozyczenia=(select min(data_wypozyczenia)from wypozyczenia);    // podzapytanie pozwala uÅ¼yc funkcji agregujÄ…cych 
 
 zad 23.
 select nazwisko from aktorzy 
@@ -127,7 +127,7 @@ zad 25.
 select tytul from filmy 
 join kopie on filmy.id_filmu=kopie.id_filmu
 join wypozyczenia on kopie.id_kopii=wypozyczenia.id_kopii
-where data_zwrotu - data_wypozyczenia = (select max(data_zwrotu - data_wypozyczenia) from wypozyczenia); //pod zapytanie zwraca wartoœæ któr¹ trzeba porównaæ 
+where data_zwrotu - data_wypozyczenia = (select max(data_zwrotu - data_wypozyczenia) from wypozyczenia); //pod zapytanie zwraca wartoÅ›Ä‡ ktÃ³rÄ… trzeba porÃ³wnaÄ‡ 
 
 zad 26.
 select distinct nazwisko 
@@ -159,7 +159,7 @@ where klienci.imie=aktorzy.imie
 
 zad 29.
 select nazwisko from klienci
-union				  // union => ³¹czenie do jednej kolumny do osobnych wierszy
+union				  // union => Å‚Ä…czenie do jednej kolumny do osobnych wierszy
 select nazwisko from aktorzy
 order by nazwisko;
 
@@ -168,7 +168,7 @@ select tytul from filmy
 join obsada on filmy.id_filmu = obsada.id_filmu
 join aktorzy on obsada.id_aktora = aktorzy.id_aktora
 where aktorzy.nazwisko = 'De Niro'
-intersect						// czêœæ wspólna z po³¹czeñ
+intersect						// czÄ™Å›Ä‡ wspÃ³lna z poÅ‚Ä…czeÅ„
 select tytul from filmy
 join obsada on filmy.id_filmu = obsada.id_filmu
 join aktorzy on obsada.id_aktora = aktorzy.id_aktora
@@ -258,3 +258,52 @@ select imie,nazwisko,count(*)
 from klienci
 join wypozyczenia on klienci.id_klienta = wypozyczenia.id_klienta
 group by imie,nazwisko;
+
+--------------------------------------------------------------------------------
+
+43.
+select tytul from filmy
+where cena = (select max(cena) from filmy );
+
+44.
+select nazwisko from klienci
+natural join kopie
+natural join wypozyczenia
+where data_wypozyczenia = (select min(data_wypozyczenia) from wypozyczenia );
+
+45.
+select tytul from filmy
+where id_filmu in (select id_filmu from kopie where czy_dostepna='T' );
+
+46.
+select tytul from filmy 
+where cena > (select cena from filmy where tytul = 'Frantic')
+
+47.
+select tytul,cena from filmy
+where  cena > all (select cena from filmy where length(tytul) = 6);
+
+48.
+insert into filmy (id_filmu,tytul,rok_produkcji,cena)
+values (11,'Komornik',2005,10.5)
+
+49.
+delete from filmy 
+where tytul = (select tytul from filmy where rok_produkcji = 2005);
+
+50.
+update filmy 
+set cena = 5.5
+where rok_produkcji < 1980
+
+51.
+insert into filmy (id_filmu,tytul,rok_produkcji,cena)
+values (12,'Nikofor',2004,9.5)
+
+52.
+
+
+53.
+update filmy 
+set cena = 5
+where tytul = 'Taksowkarz'
