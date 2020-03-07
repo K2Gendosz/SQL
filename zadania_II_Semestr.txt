@@ -1,0 +1,8 @@
+https://www.dropbox.com/s/bkdk0bd1cknqapu/Zaj_1.rar?dl=0
+
+// tworzenie perspektywy 
+
+create view  Statystyka_Klientow as  <-- 
+select imie , nazwisko ,count(id_klienta) as l_wyp from klienci
+natural join wypozyczenia
+group by imie , nazwisko;
