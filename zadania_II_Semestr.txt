@@ -6,3 +6,43 @@ create view  Statystyka_Klientow as  <--
 select imie , nazwisko ,count(id_klienta) as l_wyp from klienci
 natural join wypozyczenia
 group by imie , nazwisko;
+
+
+
+zad 2
+
+begin;
+truncate filmy;
+rollback;
+
+
+
+begin;
+insert into filmy values(11,'Komornik',2005,10.5);
+savepoint P1;
+truncate filmy;
+savepoint P2;
+truncate kopie;
+select *from filmy 
+join kopie on filmy.id_filmu = kopie.id_filmu;
+rollback to P1;
+select *from filmy 
+join kopie on filmy.id_filmu = kopie.id_filmu;
+rollback;
+select *from filmy 
+join kopie on filmy.id_filmu = kopie.id_filmu;
+
+
+begin;
+insert into filmy values(11,'Komornik',2005,10.5);
+select * from filmy;
+commit;
+
+
+begin;
+ I okno - update filmy set cena = 15 where tytul = 'Wesele';
+ II okno - update filmy set rok_produkcji = 2005 where tytul = 'Ronin';
+ I okno - update filmy set cena = 15 where tytul = 'Ronin';
+ II okno - update filmy set rok_produkcji = 2000 where tytul = 'Ronin';
+
+
